@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function catCategories(url) {
-  selector.innerHTML = `<option value="pick">Pick a category</option>`;
+  selector.innerHTML = `<option value="pick">Categories</option>`;
   fetch(url)
     .then((response) => {
       if (!response.ok) {
