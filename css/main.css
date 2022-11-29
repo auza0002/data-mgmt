@@ -99,7 +99,8 @@ select {
   }
 }
 :root {
-  --prim-color: #1e90ff;
+  --prim-color: #3cb043;
+  --second-color: #aef359;
 }
 
 /* ! START container css  */
@@ -131,6 +132,29 @@ select {
 /* ? START main css  */
 .header {
   background-color: var(--prim-color);
+  margin-bottom: 1rem;
 }
-
+.header .header_h1 {
+  padding: 1rem;
+  margin: 0;
+  color: white;
+  font-size: 1.9rem;
+}
+.header .form {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  background-color: var(--second-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.header .form label {
+  font-size: 1.3rem;
+}
+.header .form select {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 /* ! END main css  */

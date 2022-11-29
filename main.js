@@ -2,12 +2,12 @@
 // TODO import NetworkError from "./util";
 
 const selector = document.querySelector("#category");
+const keyAPI = `live_B3MS8jrg6WiRwgWSEfC8seqWmvYtectC7NczZGtuBtmwBN5c0qahR9KVNz6QuDuk`;
+let url = `https://api.thecatapi.com/v1/categories`;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const keyAPI = `live_B3MS8jrg6WiRwgWSEfC8seqWmvYtectC7NczZGtuBtmwBN5c0qahR9KVNz6QuDuk`;
-  const url = `https://api.thecatapi.com/v1/categories`;
   catCategories(url);
-  //   TODO selector.addEventListener("change");
+  selector.addEventListener("change", getValue);
 });
 
 function catCategories(url) {
@@ -27,4 +27,9 @@ function catCategories(url) {
         selector.append(option);
       });
     });
+}
+
+function getValue(ev) {
+  url = `https://api.thecatapi.com/v1/images/search?limit=10&category=${ev.target.value}&api_key${keyAPI}`;
+  console.log(url);
 }
