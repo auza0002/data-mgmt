@@ -133,6 +133,7 @@ select {
 .header {
   background-color: var(--prim-color);
   margin-bottom: 1rem;
+  padding-bottom: 1rem;
 }
 .header .header_h1 {
   padding: 1rem;
@@ -141,20 +142,66 @@ select {
   font-size: 1.9rem;
 }
 .header .form {
+  text-align: center;
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-right: 1rem;
   padding-left: 1rem;
   background-color: var(--second-color);
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 .header .form label {
   font-size: 1.3rem;
 }
 .header .form select {
-  padding-left: 1rem;
-  padding-right: 1rem;
+  text-align: center;
+  padding: 0.5rem;
+  text-transform: capitalize;
 }
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 12fr);
+}
+
+@media only screen and (min-width: 45em) {
+  .header .form {
+    grid-template-columns: repeat(2, 6fr);
+  }
+}
+@media screen and (min-width: 60em) {
+  .header .form {
+    grid-template-columns: repeat(3, 4fr);
+  }
+}
+
+/* figure {
+  display: flex;
+  flex-flow: column;
+  max-width: 220px;
+}
+
+img {
+  max-width: 220px;
+  max-height: 150px;
+}
+figcaption {
+  background-color: white;
+  border: 1px solid var(--prim-color);
+  color: black;
+  padding: 1rem;
+  text-align: center;
+}
+@media only screen and (min-width: 45em) {
+  .content-grid {
+    grid-template-columns: repeat(2, 6fr);
+  }
+}
+@media screen and (min-width: 60em) {
+  .content-grid {
+    grid-template-columns: repeat(3, 4fr);
+  }
+} */
+
 /* ! END main css  */
