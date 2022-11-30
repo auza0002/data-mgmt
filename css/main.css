@@ -61,10 +61,9 @@ a:focus {
 
 /* Make images easier to work with */
 img {
-  max-width: 100%;
+  width: 100%;
   display: block;
   aspect-ratio: 1/1;
-  min-width: 320px;
 }
 
 /* Inherit fonts for inputs and buttons */
