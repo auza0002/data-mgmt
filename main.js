@@ -1,9 +1,11 @@
 import pickRandomName from "./data.js";
 // TODO import NetworkError from "./util";
-let ul = document.querySelector(".content-grid");
 const selector = document.querySelector("#category");
 const keyAPI = `live_B3MS8jrg6WiRwgWSEfC8seqWmvYtectC7NczZGtuBtmwBN5c0qahR9KVNz6QuDuk`;
 let url = `https://api.thecatapi.com/v1/categories`;
+let ul = document.querySelector(".content-grid");
+let divContainer = document.querySelector(".div_error")
+let spinImg = document.querySelector(".loader_img");
 let cache = {};
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -12,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function catCategories(url) {
-  selector.innerHTML = `<option value="pick">Categories</option>`;
+  selector.innerHTML = `<option>Categories</option>`;
   fetch(url)
     .then((response) => {
       if (!response.ok) {
@@ -27,24 +29,36 @@ function catCategories(url) {
         option.setAttribute("value", `${item.id}`);
         selector.append(option);
       });
+    })
+    .catch((err) => {
+      console.log(err)
+      return errorCategories(true);
     });
 }
 
 function getImgCats(ev) {
+  spin();
+  errorCategories();
+if(ev.target.value === "Categories"){
+        return;
+  }
   url = `https://api.thecatapi.com/v1/images/search?limit=10&category_ids=${ev.target.value}&api_key${keyAPI}`;
-  console.log(url);
   ul.innerHTML = ``;
   fetch(url)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(response.statusText);
+  if (!response.ok) {
+    spin(false)
+    throw new Error(response.statusText)
+      }else{
+        spin(true)
+      return delay(2000).then(() => response.json());
       }
-      return response.json();
-    })
+    }) 
     .then((data) => {
-      let catNames = pickRandomName();
+      spin(false);
       ul.innerHTML = data
         .map((item) => {
+          let catNames = pickRandomName();
           cache[item.id] = catNames;
           if (item.id in cache) {
             return `
@@ -57,6 +71,7 @@ function getImgCats(ev) {
             </li>
         `;
           } else {
+            cache[(item.id)] = catNames;
             return `
             <li>
             <figure>
@@ -69,7 +84,34 @@ function getImgCats(ev) {
           }
         })
         .join("");
+    })
+    .catch((err) => {
+      console.log(err)
+      return errorCategories(true);
     });
 }
+function spin(show){
+  if (show === true){
+    spinImg.classList.add('active');
+  }else {
+    spinImg.classList.remove('active')
+  }
+}
+function delay(time) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, time);
+  });
 
-console.log(cache);
+}
+function errorCategories(show){
+  if (show){
+    spin(false);
+    console.log("yes error working")
+    divContainer.classList.add('active');
+  }else {
+
+    console.log("nope error not working")
+    divContainer.classList.remove('active');
+  }
+}
+

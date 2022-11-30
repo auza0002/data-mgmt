@@ -64,6 +64,7 @@ img {
   max-width: 100%;
   display: block;
   aspect-ratio: 1/1;
+  min-width: 320px;
 }
 
 /* Inherit fonts for inputs and buttons */
@@ -202,5 +203,49 @@ figcaption {
     grid-template-columns: repeat(3, 4fr);
   }
 }
+/* ! loader */
 
+.loader .loader_img{
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: var(--border-rad);
+  display: none
+}
+.loader .loader_img.active{
+  display: block;
+  width: 20rem;
+  animation-name: loaderImg;
+	animation-duration: 3s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+@keyframes loaderImg {
+  0% {
+    transform: rotate(0deg);
+  }
+  25%{
+transform: rotate(5deg);
+  }
+75%{
+  transform: rotate(-5deg);
+}
+  100%{
+transform: rotate(0deg);
+  }
+}
+/* ! END loader */
+/* ! Error */
+.div_error{
+  text-align: center;
+  display: none;
+}
+.div_error.active{
+  text-align: center;
+  display: initial;
+}
+.div_error .error_img{
+  width: 20rem;
+  margin: auto;
+}
+/* ? END Error */
 /* ! END main css  */
