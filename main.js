@@ -7,6 +7,7 @@ let ul = document.querySelector(".content-grid");
 let divContainer = document.querySelector(".div_error")
 let spinImg = document.querySelector(".loader_img");
 let cache = {};
+let fetchCount = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   catCategories(url);
@@ -37,8 +38,8 @@ function catCategories(url) {
 }
 
 function getImgCats(ev) {
-  spin();
-  errorCategories();
+  // spin();
+  // errorCategories();
 if(ev.target.value === "Categories"){
         return;
   }
@@ -56,11 +57,11 @@ if(ev.target.value === "Categories"){
     }) 
     .then((data) => {
       spin(false);
-      ul.innerHTML = data
-        .map((item) => {
+      ul.innerHTML = data.map(item => {
           let catNames = pickRandomName();
-          cache[item.id] = catNames;
           if (item.id in cache) {
+            console.log('bye bye');
+
             return `
             <li>
             <figure>
@@ -71,7 +72,8 @@ if(ev.target.value === "Categories"){
             </li>
         `;
           } else {
-            cache[(item.id)] = catNames;
+            console.log("Hello");
+            cache[(item.id)] = `${catNames} from fetch ${fetchCount}`;
             return `
             <li>
             <figure>
@@ -79,17 +81,30 @@ if(ev.target.value === "Categories"){
             alt='cat img'>
             <figcaption>→ ${catNames} ←</figcaption>
             </figure>
-            </li>
-        `;
+            </li>`;
           }
         })
         .join("");
+        fetchCount++;
+        showCache();
     })
     .catch((err) => {
       console.log(err)
       return errorCategories(true);
     });
+    
 }
+
+function showCache() {
+  // console.clear();
+  console.log(cache);
+}
+//----------------------
+
+
+
+
+
 function spin(show){
   if (show === true){
     spinImg.classList.add('active');
