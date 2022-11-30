@@ -60,19 +60,10 @@ a:focus {
 }
 
 /* Make images easier to work with */
-img,
-picture,
-svg {
+img {
   max-width: 100%;
   display: block;
-}
-
-svg {
-  fill: currentColor;
-}
-
-svg:not(:root) {
-  overflow: hidden;
+  aspect-ratio: 1/1;
 }
 
 /* Inherit fonts for inputs and buttons */
@@ -101,7 +92,7 @@ select {
 :root {
   --prim-color: #3cb043;
   --second-color: #aef359;
-  --mainH2-color: #d0d0d0;
+  --mainH2-color: #808080;
   --border-rad: 10px;
 }
 
@@ -174,40 +165,27 @@ select {
   border: 1px solid var(--prim-color);
 }
 .content-grid {
+  padding: 0;
   display: grid;
+  gap: 1rem;
   grid-template-columns: repeat(1, 12fr);
 }
 
-@media only screen and (min-width: 45em) {
-  .header .form {
-    grid-template-columns: repeat(2, 6fr);
-  }
-}
-@media screen and (min-width: 60em) {
-  .header .form {
-    grid-template-columns: repeat(3, 4fr);
-  }
-}
 .main .main_h2 {
   padding: 1rem;
   color: white;
   background-color: var(--mainH2-color);
   text-align: center;
+  border-radius: var(--border-rad);
 }
-/* figure {
-  display: flex;
-  flex-flow: column;
-  max-width: 220px;
-}
-
-img {
-  max-width: 220px;
-  max-height: 150px;
+figure {
+  margin-bottom: 0%;
 }
 figcaption {
-  background-color: white;
+  font-size: 1.5rem;
+  background-color: var(--prim-color);
   border: 1px solid var(--prim-color);
-  color: black;
+  color: white;
   padding: 1rem;
   text-align: center;
 }
@@ -215,11 +193,14 @@ figcaption {
   .content-grid {
     grid-template-columns: repeat(2, 6fr);
   }
+  .header .form {
+    grid-template-columns: repeat(2, 6fr);
+  }
 }
 @media screen and (min-width: 60em) {
   .content-grid {
     grid-template-columns: repeat(3, 4fr);
   }
-} */
+}
 
 /* ! END main css  */

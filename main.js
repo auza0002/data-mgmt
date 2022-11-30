@@ -1,9 +1,10 @@
-// TODO import pickRandomName from "./data";
+import pickRandomName from "./data.js";
 // TODO import NetworkError from "./util";
 let ul = document.querySelector(".content-grid");
 const selector = document.querySelector("#category");
 const keyAPI = `live_B3MS8jrg6WiRwgWSEfC8seqWmvYtectC7NczZGtuBtmwBN5c0qahR9KVNz6QuDuk`;
 let url = `https://api.thecatapi.com/v1/categories`;
+let cache = {};
 
 document.addEventListener("DOMContentLoaded", () => {
   catCategories(url);
@@ -41,16 +42,34 @@ function getImgCats(ev) {
       return response.json();
     })
     .then((data) => {
-      data.map((item) => {
-        let li = document.createElement("li");
-        li.innerHTML = `
-        <figure>
+      let catNames = pickRandomName();
+      ul.innerHTML = data
+        .map((item) => {
+          cache[item.id] = catNames;
+          if (item.id in cache) {
+            return `
+            <li>
+            <figure>
             <img src='${item.url}'
-                alt='cat img'>
-                <figcaption>An elephant at sunset</figcaption>
-        </figure>
+            alt='cat img'>
+            <figcaption>→ ${cache[item.id]} ←</figcaption>
+            </figure>
+            </li>
         `;
-        ul.append(li);
-      });
+          } else {
+            return `
+            <li>
+            <figure>
+            <img src='${item.url}'
+            alt='cat img'>
+            <figcaption>→ ${catNames} ←</figcaption>
+            </figure>
+            </li>
+        `;
+          }
+        })
+        .join("");
     });
 }
+
+console.log(cache);
