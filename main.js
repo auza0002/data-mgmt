@@ -37,8 +37,6 @@ function catCategories(url) {
 }
 
 function getImgCats(ev) {
-  // spin();
-  // errorCategories();
 if(ev.target.value === "Categories"){
         return;
   }
@@ -46,9 +44,10 @@ if(ev.target.value === "Categories"){
   ul.innerHTML = ``;
   fetch(url)
     .then((response) => {
+      console.log(response)
   if (!response.ok) {
     spin(false)
-    throw new Error(response.statusText)
+    throw new NetworkError(response)
       }else{
         spin(true)
       return delay(2000).then(() => response.json());
@@ -85,8 +84,8 @@ if(ev.target.value === "Categories"){
          saveToLocalStorage();
     })
     .catch((err) => {
-      console.log(err, err.statusText, err.status)
-      return errorCategories(true);
+      console.log({err})
+      return errorCategories(true, err);
     });
 }
 
@@ -115,13 +114,14 @@ function delay(time) {
   });
 
 }
-function errorCategories(show){
+function errorCategories(show, err){
   if (show){
     spin(false);
-    console.log("yes error working")
+    console.log("error working")
+    console.warn(err)
     divContainer.classList.add('active');
   }else {
-    console.log("nope error not working")
+    console.log("error not working")
     divContainer.classList.remove('active');
   }
 }

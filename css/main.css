@@ -212,11 +212,31 @@ figcaption {
 }
 .loader .loader_img.active{
   display: block;
+  width: 10rem;
+  animation-name: loaderImg;
+	animation-duration: 3s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+@media only screen and (min-width: 45em) {
+  .loader .loader_img.active{
+  display: block;
+  width: 15rem;
+  animation-name: loaderImg;
+	animation-duration: 3s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+}
+@media screen and (min-width: 60em) {
+  .loader .loader_img.active{
+  display: block;
   width: 20rem;
   animation-name: loaderImg;
 	animation-duration: 3s;
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
+}
 }
 @keyframes loaderImg {
   0% {
