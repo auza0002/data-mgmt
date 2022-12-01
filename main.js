@@ -6,13 +6,13 @@ let url = `https://api.thecatapi.com/v1/categories`;
 let ul = document.querySelector(".content-grid");
 let divContainer = document.querySelector(".div_error")
 let spinImg = document.querySelector(".loader_img");
-let cache = {};
+let cache = getLocalStorage();
 
 document.addEventListener("DOMContentLoaded", () => {
   catCategories(url);
   selector.addEventListener("change", getImgCats);
 });
-
+  
 function catCategories(url) {
   selector.innerHTML = `<option>Categories</option>`;
   fetch(url)
@@ -82,27 +82,29 @@ if(ev.target.value === "Categories"){
         })
         .join("");
         showCache();
+         saveToLocalStorage();
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err, err.statusText, err.status)
       return errorCategories(true);
     });
-    
 }
 
 function showCache() {
   // console.clear();
   console.log(cache);
 }
-//----------------------
-
-
-
-
-
+function saveToLocalStorage() {
+  localStorage.setItem('cache-auza0002', JSON.stringify(cache));
+}
+function getLocalStorage(){
+  let cache = localStorage.getItem("cache-auza0002")
+  return cache ? JSON.parse(cache) : {};
+}
 function spin(show){
   if (show === true){
     spinImg.classList.add('active');
+    errorCategories(false);
   }else {
     spinImg.classList.remove('active')
   }
@@ -119,7 +121,6 @@ function errorCategories(show){
     console.log("yes error working")
     divContainer.classList.add('active');
   }else {
-
     console.log("nope error not working")
     divContainer.classList.remove('active');
   }
