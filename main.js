@@ -1,5 +1,11 @@
+document.addEventListener("DOMContentLoaded", () => {
+  catCategories(url);
+  selector.addEventListener("change", getImgCats);
+});
+
 import pickRandomName from "./data.js";
-// TODO import NetworkError from "./util";
+import {NetworkError} from "./util.js";
+
 const selector = document.querySelector("#category");
 const keyAPI = `live_B3MS8jrg6WiRwgWSEfC8seqWmvYtectC7NczZGtuBtmwBN5c0qahR9KVNz6QuDuk`;
 let url = `https://api.thecatapi.com/v1/categories`;
@@ -8,10 +14,6 @@ let divContainer = document.querySelector(".div_error")
 let spinImg = document.querySelector(".loader_img");
 let cache = getLocalStorage();
 
-document.addEventListener("DOMContentLoaded", () => {
-  catCategories(url);
-  selector.addEventListener("change", getImgCats);
-});
   
 function catCategories(url) {
   selector.innerHTML = `<option>Categories</option>`;
@@ -31,8 +33,7 @@ function catCategories(url) {
       });
     })
     .catch((err) => {
-      console.log(err)
-      return errorCategories(true);
+      return errorCategories(true, err)
     });
 }
 
@@ -44,10 +45,9 @@ if(ev.target.value === "Categories"){
   ul.innerHTML = ``;
   fetch(url)
     .then((response) => {
-      console.log(response)
   if (!response.ok) {
     spin(false)
-    throw new NetworkError(response)
+    throw new NetworkError('Failed API Call', response);
       }else{
         spin(true)
       return delay(2000).then(() => response.json());
@@ -80,19 +80,13 @@ if(ev.target.value === "Categories"){
           }
         })
         .join("");
-        showCache();
          saveToLocalStorage();
     })
     .catch((err) => {
-      console.log({err})
       return errorCategories(true, err);
     });
 }
 
-function showCache() {
-  // console.clear();
-  console.log(cache);
-}
 function saveToLocalStorage() {
   localStorage.setItem('cache-auza0002', JSON.stringify(cache));
 }
@@ -116,12 +110,12 @@ function delay(time) {
 }
 function errorCategories(show, err){
   if (show){
+    let errorP = document.querySelector(".error_p");
+    errorP.innerHTML = `Error ${err.status}, try again`
     spin(false);
-    console.log("error working")
     console.warn(err)
     divContainer.classList.add('active');
   }else {
-    console.log("error not working")
     divContainer.classList.remove('active');
   }
 }
