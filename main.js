@@ -41,10 +41,11 @@ function getImgCats(ev) {
 if(ev.target.value === "Categories"){
         return;
   }
-  url = `https://api.thecatapi.com/v1/images/search?limit=10&category_ids=${ev.target.value}&api_key${keyAPI}`;
+  url = `------https://api.thecatapi.com/v1/images/search?limit=10&category_ids=${ev.target.value}&api_key${keyAPI}`;
   ul.innerHTML = ``;
   fetch(url)
     .then((response) => {
+      console.log(response)
   if (!response.ok) {
     spin(false)
     throw new NetworkError('Failed API Call', response);
@@ -110,11 +111,19 @@ function delay(time) {
 }
 function errorCategories(show, err){
   if (show){
+    console.log(err.status)
     let errorP = document.querySelector(".error_p");
-    errorP.innerHTML = `Error ${err.status}, try again`
-    spin(false);
-    console.warn(err)
-    divContainer.classList.add('active');
+    if (err.status === 404){
+      errorP.innerHTML = `Error ${err.status}, try again. no images found`
+      spin(false);
+      console.warn(err)
+      divContainer.classList.add('active');
+    } else {
+      spin(false);
+      console.warn(err)
+      divContainer.classList.add('active');
+      return errorP.innerHTML = `there is something wrong, try again. double check your connection`
+    }
   }else {
     divContainer.classList.remove('active');
   }
