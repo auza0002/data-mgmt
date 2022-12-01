@@ -41,7 +41,7 @@ function getImgCats(ev) {
 if(ev.target.value === "Categories"){
         return;
   }
-  url = `------https://api.thecatapi.com/v1/images/search?limit=10&category_ids=${ev.target.value}&api_key${keyAPI}`;
+  url = `https://api.thecatapi.com/v1/images/search?limit=10&category_ids=${ev.target.value}&api_key${keyAPI}`;
   ul.innerHTML = ``;
   fetch(url)
     .then((response) => {
