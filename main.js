@@ -7,7 +7,6 @@ let ul = document.querySelector(".content-grid");
 let divContainer = document.querySelector(".div_error")
 let spinImg = document.querySelector(".loader_img");
 let cache = {};
-let fetchCount = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   catCategories(url);
@@ -60,8 +59,6 @@ if(ev.target.value === "Categories"){
       ul.innerHTML = data.map(item => {
           let catNames = pickRandomName();
           if (item.id in cache) {
-            console.log('bye bye');
-
             return `
             <li>
             <figure>
@@ -72,8 +69,7 @@ if(ev.target.value === "Categories"){
             </li>
         `;
           } else {
-            console.log("Hello");
-            cache[(item.id)] = `${catNames} from fetch ${fetchCount}`;
+            cache[(item.id)] = `${catNames}`;
             return `
             <li>
             <figure>
@@ -85,7 +81,6 @@ if(ev.target.value === "Categories"){
           }
         })
         .join("");
-        fetchCount++;
         showCache();
     })
     .catch((err) => {
